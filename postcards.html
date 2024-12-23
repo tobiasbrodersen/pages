@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>postcards for my mom</title>
+    <style>     
+        :root {
+        --body-bg: #FDFCFB;
+        --body-color: #1E1E1E;
+        --link: #00B7A8;
+        --selection: #BB86FC;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --body-bg: #1E1E1E;
+                --body-color: #E0E1E1;
+                --link: #00DAC6;
+                --selection: #BB86FC;
+            }
+        }
+    
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            height: 100vh;
+            color: var(--body-color);
+            background-color: var(--body-bg);
+        }
+
+        .container {
+            display: flex;
+            align-items: flex-start;
+            width: 100%;
+            max-width: 1000px;
+            margin: 20px;
+        }
+
+        .sidebar {
+            width: 200px;
+            margin-right: 50px;
+            margin-top: 20px;
+        }
+
+        .sidebar img {
+            width: 200px;
+            height: 200px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            border: 2px solid transparent;
+            border-radius: 10px; /* Rounded corners */
+            transition: border-color 0.3s;
+        }
+
+        .sidebar img:hover {
+            border-color: #007BFF;
+        }
+
+        .content {
+            flex-grow: 1;
+            max-width: 800px;
+            text-align: left;
+            margin: 0 auto; /* Center the content horizontally */
+        }
+
+        .content article {
+            display: none;
+        }
+
+        .content article.active {
+            display: block;
+        }
+
+        .language-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 10px;
+            background: #f0f0f0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        a:visited {
+            color: var(--link);
+            text-decoration: none;
+            border-bottom: 1px dotted var(--link);
+        }
+
+        ::selection {
+            background: var(--selection);
+        }
+         
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="sidebar">
+            <img src="https://t4.ftcdn.net/jpg/01/14/69/25/240_F_114692553_AlsqALliXH8n9fa7picIvlPCxRBa78K7.jpg" alt="Naples" data-article="article1">
+            <img src="https://media.cntraveler.com/photos/63482b255e7943ad4006df0b/16:9/w_1280,c_limit/tokyoGettyImages-1031467664.jpeg" alt="Tokyo" data-article="article2">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR9AIixUqZiPESF6SaV7Ic5wRfzA-ykMkj6_Q&s" alt="Korea" data-article="article3">
+        </div>
+        <div class="content">
+            <article id="article1" class="active">
+                <h2>Naples Adventure (CHATGPT PLACEHOLDER)</h2>
+                <p>Naples was a breathtaking destination with a rich history and vibrant culture. I strolled through ancient streets, indulged in authentic Italian pizza, and admired the grandeur of Mount Vesuvius. The local markets were alive with color and energy, and every corner seemed to hold a new surprise.</p>
+                <p>The city’s historical landmarks, including the Castel dell’Ovo and Naples Cathedral, were truly awe-inspiring. A boat trip along the Amalfi Coast was the highlight of the journey, offering spectacular views of the turquoise waters and picturesque villages.</p>
+            </article>
+            <article id="article2">
+                <h2>Tokyo Exploration (CHATGPT PLACEHOLDER)</h2>
+                <p>Tokyo was an electrifying mix of tradition and modernity. From the serene Meiji Shrine to the bustling streets of Shibuya, every moment was filled with wonder. The sushi in Tsukiji Market was unlike anything I’d ever tasted, and the cherry blossoms in Ueno Park were simply magical.</p>
+                <p>One of the most memorable experiences was visiting Akihabara, the heart of otaku culture, where I explored countless shops dedicated to anime and gaming. The view from the Tokyo Skytree was breathtaking, showcasing the vast cityscape.</p>
+            </article>
+            <article id="article3">
+                <h2>Korean Journey (CHATGPT PLACEHOLDER)</h2>
+                <p>Korea offered a unique blend of ancient traditions and cutting-edge technology. Seoul’s Gyeongbokgung Palace was a window into the country’s royal past, while the vibrant streets of Myeongdong were a shopper’s paradise. The food scene was unforgettable, with mouthwatering dishes like kimchi and bulgogi.</p>
+                <p>Exploring the serene landscapes of Jeju Island was a stark contrast to the city’s energy. The island’s volcanic craters, waterfalls, and stunning beaches made it a nature lover’s dream. Korea was a journey full of discoveries and unforgettable memories.</p>
+            </article>
+        </div>
+    </div>
+
+    <div class="language-toggle">Dansk</div>
+
+    <script>
+        const images = document.querySelectorAll('.sidebar img');
+        const articles = document.querySelectorAll('.content article');
+        const toggle = document.querySelector('.language-toggle');
+
+        images.forEach(image => {
+            image.addEventListener('click', () => {
+                const targetArticle = image.getAttribute('data-article');
+
+                articles.forEach(article => {
+                    article.classList.remove('active');
+                });
+
+                document.getElementById(targetArticle).classList.add('active');
+            });
+        });
+
+        toggle.addEventListener('click', () => {
+            const isEnglish = toggle.textContent.includes('Dansk');
+
+            toggle.textContent = isEnglish ? 'English' : 'Dansk';
+
+            document.querySelectorAll('.content article').forEach((article, index) => {
+                if (isEnglish) {
+                    const translations = [
+                        ["Napoli-eventyr (CHATGPT PLACEHOLDER)", "Napoli var en betagende destination med en rig historie og levende kultur. Jeg spadserede gennem gamle gader, nød autentisk italiensk pizza og beundrede storheden af Vesuv. De lokale markeder var fyldt med farver og energi, og hvert hjørne syntes at gemme på en ny overraskelse.", "Byens historiske vartegn, inklusive Castel dell’Ovo og Napolis Katedral, var virkelig imponerende. En bådtur langs Amalfikysten var turens højdepunkt og bød på spektakulære udsigter over det turkisblå vand og maleriske landsbyer."],
+                        ["Tokyo-udforskning (CHATGPT PLACEHOLDER)", "Tokyo var en elektrificerende blanding af tradition og modernitet. Fra det rolige Meiji-helligdom til de travle gader i Shibuya var hvert øjeblik fyldt med forundring. Sushi i Tsukiji-markedet var noget helt særligt, og kirsebærblomsterne i Ueno Park var magiske.", "En af de mest mindeværdige oplevelser var at besøge Akihabara, centrum for otaku-kultur, hvor jeg udforskede utallige butikker dedikeret til anime og gaming. Udsigten fra Tokyo Skytree var betagende og viste byens enorme omfang."],
+                        ["Korea-rejse (CHATGPT PLACEHOLDER)", "Korea tilbød en unik blanding af gamle traditioner og banebrydende teknologi. Seouls Gyeongbokgung-palads var et vindue til landets kongelige fortid, mens de livlige gader i Myeongdong var et paradis for shoppere. Madscenen var uforglemmelig med lækre retter som kimchi og bulgogi.", "At udforske de fredfyldte landskaber på Jeju-øen var en stærk kontrast til byens energi. Øens vulkanske kratere, vandfald og fantastiske strande gjorde det til en naturelskers drøm. Korea var en rejse fuld af opdagelser og uforglemmelige minder."]
+                    ];
+
+                    article.querySelector('h2').textContent = translations[index][0];
+                    article.querySelectorAll('p')[0].textContent = translations[index][1];
+                    article.querySelectorAll('p')[1].textContent = translations[index][2];
+                } else {
+                    location.reload(); // Reload the page to reset content back to English
+                }
+            });
+        });
+    </script>
+</body>
+</html>
