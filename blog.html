@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Blog</title>
+    <style>
+        /* Basic styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+        }
+
+        header {
+            background-color: #333;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        h1 {
+            margin: 0;
+        }
+
+        footer {
+            text-align: center;
+            padding: 10px;
+            background-color: #333;
+            color: white;
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+        }
+
+        #blog-list {
+            margin: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .blog-post {
+            background-color: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            width: 300px;
+        }
+
+        .blog-post a {
+            text-decoration: none;
+            color: #333;
+            font-size: 18px;
+        }
+
+        .blog-post a:hover {
+            text-decoration: underline;
+        }
+
+        /* Blog post content hidden by default */
+        .blog-content {
+            display: none;
+            margin: 20px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>My Simple Blog</h1>
+    </header>
+
+    <section id="blog-list">
+        <!-- Blog posts will be dynamically loaded here -->
+    </section>
+
+    <div id="blog-content" class="blog-content">
+        <!-- Individual blog post content will be injected here -->
+    </div>
+
+    <!-- <footer>
+        <p>Created by Your Name</p>
+    </footer> -->
+
+    <script>
+        // List of blog post titles and their corresponding slugs (matching file names in /blog)
+        const blogPosts = [
+            { title: "Code of Advent 2024", slug: "coa2024" }
+        ];
+
+        // Function to render blog list on the homepage
+        function renderBlogList() {
+            const blogList = document.getElementById("blog-list");
+            blogPosts.forEach(post => {
+                const blogPostDiv = document.createElement("div");
+                blogPostDiv.classList.add("blog-post");
+
+                const link = document.createElement("a");
+                link.href = "#";
+                link.textContent = post.title;
+                link.addEventListener("click", () => loadBlogPost(post.slug));
+
+                blogPostDiv.appendChild(link);
+                blogList.appendChild(blogPostDiv);
+            });
+        }
+
+        // Function to load and display a specific blog post
+        function loadBlogPost(slug) {
+            const blogContent = document.getElementById("blog-content");
+            blogContent.innerHTML = "<p>Loading...</p>";
+            blogContent.style.display = "block";
+            document.getElementById("blog-list").style.display = "none";
+
+            // Fetch the HTML file for the selected post
+            fetch(`blog/${slug}.html`)
+                .then(response => response.text())
+                .then(data => {
+                    // Inject the HTML content of the blog post into the #blog-content div
+                    blogContent.innerHTML = data;
+                    // Optionally, you can modify the title of the page when viewing a blog post
+                    document.title = `${slug.replace(/-/g, ' ')} - My Simple Blog`;
+                })
+                .catch(error => {
+                    blogContent.innerHTML = "<p>Sorry, the article could not be loaded. Please try again later.</p>";
+                    console.error("Error loading the article:", error);
+                });
+        }
+
+        // Function to go back to the blog list
+        function goBack() {
+            document.getElementById("blog-content").style.display = "none";
+            document.getElementById("blog-list").style.display = "flex";
+            document.title = "My Simple Blog"; // Reset the page title when going back
+        }
+
+        // Initialize the page by rendering the blog list
+        window.addEventListener('load', function () {
+            renderBlogList();
+        });
+    </script>
+
+</body>
+
+</html>
