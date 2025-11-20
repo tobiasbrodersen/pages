@@ -1,0 +1,199 @@
+@import url('https://fonts.googleapis.com/css?family=Poiret+One|Source+Sans+Pro');
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    height: 100%;
+}
+
+body {
+    font-size: 110%;
+    color: #ecf0f1;
+    font-family: 'Source Sans Pro', sans-serif;
+    background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
+    width: 100%;
+    position: relative;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.stars,
+.stars2,
+.stars3 {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    pointer-events: none;
+}
+
+.stars {
+    width: 1px;
+    height: 1px;
+    background: transparent;
+    box-shadow: 1983px 1070px #FFF, 1625px 734px #FFF, 1505px 1218px #FFF, 1288px 1382px #FFF, 1023px 982px #FFF, 184px 1501px #FFF, 1352px 1072px #FFF, 966px 577px #FFF, 1928px 1505px #FFF, 284px 1863px #FFF, 871px 390px #FFF, 1591px 1017px #FFF, 1919px 1315px #FFF, 1552px 697px #FFF, 1775px 1722px #FFF, 61px 321px #FFF, 1108px 1281px #FFF, 1795px 22px #FFF, 1808px 716px #FFF, 797px 374px #FFF;
+    animation: animStar 50s linear infinite;
+}
+
+.stars:after {
+    content: " ";
+    position: absolute;
+    top: 2000px;
+    width: 1px;
+    height: 1px;
+    background: transparent;
+    box-shadow: 1983px 1070px #FFF, 1625px 734px #FFF, 1505px 1218px #FFF, 1288px 1382px #FFF, 1023px 982px #FFF, 184px 1501px #FFF, 1352px 1072px #FFF, 966px 577px #FFF, 1928px 1505px #FFF, 284px 1863px #FFF, 871px 390px #FFF, 1591px 1017px #FFF, 1919px 1315px #FFF, 1552px 697px #FFF, 1775px 1722px #FFF, 61px 321px #FFF, 1108px 1281px #FFF, 1795px 22px #FFF, 1808px 716px #FFF, 797px 374px #FFF;
+}
+
+.stars2 {
+    width: 2px;
+    height: 2px;
+    background: transparent;
+    box-shadow: 1124px 1500px #FFF, 916px 1039px #FFF, 1281px 2000px #FFF, 1702px 518px #FFF, 246px 953px #FFF, 1889px 287px #FFF, 1438px 1139px #FFF, 1824px 1739px #FFF, 1090px 1205px #FFF, 1514px 392px #FFF;
+    animation: animStar 100s linear infinite;
+}
+
+.stars2:after {
+    content: " ";
+    position: absolute;
+    top: 2000px;
+    width: 2px;
+    height: 2px;
+    background: transparent;
+    box-shadow: 1124px 1500px #FFF, 916px 1039px #FFF, 1281px 2000px #FFF, 1702px 518px #FFF, 246px 953px #FFF, 1889px 287px #FFF, 1438px 1139px #FFF, 1824px 1739px #FFF, 1090px 1205px #FFF, 1514px 392px #FFF;
+}
+
+.stars3 {
+    width: 3px;
+    height: 3px;
+    background: transparent;
+    box-shadow: 1106px 1979px #FFF, 1572px 505px #FFF, 25px 1324px #FFF, 650px 558px #FFF, 558px 1555px #FFF, 782px 1910px #FFF, 95px 1646px #FFF, 1794px 169px #FFF;
+    animation: animStar 150s linear infinite;
+}
+
+.stars3:after {
+    content: " ";
+    position: absolute;
+    top: 2000px;
+    width: 3px;
+    height: 3px;
+    background: transparent;
+    box-shadow: 1106px 1979px #FFF, 1572px 505px #FFF, 25px 1324px #FFF, 650px 558px #FFF, 558px 1555px #FFF, 782px 1910px #FFF, 95px 1646px #FFF, 1794px 169px #FFF;
+}
+
+@keyframes animStar {
+    from {
+        transform: translateY(0px);
+    }
+
+    to {
+        transform: translateY(-2000px);
+    }
+}
+
+.container {
+    position: relative;
+    z-index: 1;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 20px;
+}
+
+h1 {
+    font-family: 'Poiret One', cursive;
+    font-size: 3.5rem;
+    text-align: center;
+    margin-bottom: 50px;
+    text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+}
+
+.wishlist-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    margin-bottom: 40px;
+}
+
+.wishlist-item {
+    display: block;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    padding: 20px;
+    backdrop-filter: blur(10px);
+    transition: transform 0.3s, box-shadow 0.3s;
+    text-decoration: none;
+    color: #ecf0f1;
+    /* This ensures no purple color */
+    cursor: pointer;
+}
+
+.wishlist-item:visited {
+    color: #ecf0f1;
+    /* Keeps color white even after visiting */
+}
+
+.wishlist-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(255, 255, 255, 0.1);
+}
+
+.wishlist-item:hover .item-title {
+    color: #3498db;
+}
+
+.item-image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.item-title {
+    font-size: 1.4rem;
+    font-weight: 600;
+    margin-bottom: 15px;
+    color: #ecf0f1;
+    transition: color 0.3s;
+}
+
+.item-details {
+    font-size: 0.9rem;
+    line-height: 1.8;
+}
+
+.item-detail {
+    display: flex;
+    margin-bottom: 8px;
+}
+
+.detail-key {
+    font-weight: 600;
+    margin-right: 8px;
+    min-width: 80px;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.detail-value {
+    color: #ecf0f1;
+}
+
+@media (max-width: 1024px) {
+    .wishlist-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 640px) {
+    .wishlist-grid {
+        grid-template-columns: 1fr;
+    }
+}

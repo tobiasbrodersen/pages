@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Wishlist</title>
+    <link rel="stylesheet" href="wishlist.css">
+</head>
+
+<body>
+    <div class="stars"></div>
+    <div class="stars2"></div>
+    <div class="stars3"></div>
+
+    <div class="container">
+        <h1>Tubbe's Ønskesky</h1>
+        <div class="wishlist-grid" id="wishlist"></div>
+    </div>
+
+    <script>
+        // Define your wishlist items here
+        const wishlistItems = [
+            {
+                image: "https://ushi.dk/wp-content/uploads/2023/11/midlertidig-Tanuki-Gyuto-210-mm-kiritsuke-gyuto-2.jpg.webp",
+                title: "Tanuki, Japansk kniv",
+                link: "https://ushi.dk/vare/tanuki-bunka-210-mm-japansk-kokkekniv/",
+                details: {
+                    "længde": "210mm",
+                }
+            },
+            {
+                image: "https://www.xltoj.dk/filarkiv/American_boy/jack_black.jpg",
+                title: "Adamo - Jack Boksershorts 2 Pak",
+                link: "https://www.xltoj.dk/Adamo-Jack-Boksershorts-2-Pak",
+                details: {
+                    "Størrelse": "7XL",
+                }
+            },
+            {
+                image: "https://xn--bambustj-c5a.dk/cdn/shop/products/Copenhagen-Bamboo-bambus-stromper-sort-5-pak.jpg?v=1670576871",
+                title: "Bambus Strømper",
+                link: "https://bambustøj.dk/collections/alle-bambus-stromper-til-maend/products/5-par-sort-bambus-stromper",
+                details: {
+                    "Størrelse": "45",
+                }
+            },
+            {
+                image: "https://www.proshop.dk/Images/1600x1200/3061965_8627921df1e9.png",
+                title: "Sodastream DUO",
+                link: "https://www.compumail.dk/da/p/sodastream-duo-sodavandsmaskine-sort-1000783812?utm_source=pricerunner&utm_medium=cpc&utm_campaign=pricerunner",
+                details: {
+                    "Model": "DUO",
+                }
+            },
+            {
+                image: "https://cdn.interkart.de/magento/catalog/product/w/e/weltkarte-als-korkpinnwand-deutsch.jpg?profile=interkart&q=90&canvas.width=345&canvas.height=233&canvas.color=ffffff&w=345&h=233",
+                title: "Verdenskort",
+                link: "https://www.interkart.de/dk/fysisk-verdenskort-stort-format-202-x-123cm.html",
+                details: {}
+            }
+        ];
+
+        // Function to create wishlist item HTML
+        function createWishlistItem(item) {
+            const detailsHTML = Object.entries(item.details)
+                .map(([key, value]) => `
+                    <div class="item-detail">
+                        <span class="detail-key">${key}:</span>
+                        <span class="detail-value">${value}</span>
+                    </div>
+                `).join('');
+
+            return `
+                <a href="${item.link}" target="_blank" class="wishlist-item">
+                    <img src="${item.image}" alt="${item.title}" class="item-image">
+                    <div class="item-title">
+                        ${item.title}
+                    </div>
+                    <div class="item-details">
+                        ${detailsHTML}
+                    </div>
+                </a>
+            `;
+        }
+
+        // Render all wishlist items
+        function renderWishlist() {
+            const container = document.getElementById('wishlist');
+            container.innerHTML = wishlistItems.map(createWishlistItem).join('');
+        }
+
+        // Initialize wishlist when page loads
+        renderWishlist();
+    </script>
+</body>
+
+</html>
