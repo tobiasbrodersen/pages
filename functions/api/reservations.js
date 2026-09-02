@@ -3,12 +3,22 @@
 // One key per reserved item id (value "1") — avoids the read-modify-write
 // race a single JSON-array key would have.
 
+function noBinding(env) {
+  if (!env.WISHLIST) {
+    return new Response("KV binding 'WISHLIST' is not configured", { status: 500 });
+  }
+}
+
 export async function onRequestGet({ env }) {
+  const err = noBinding(env);
+  if (err) return err;
   const list = await env.WISHLIST.list();
   return Response.json({ ids: list.keys.map((k) => k.name) });
 }
 
 export async function onRequestPost({ env, request }) {
+  const err = noBinding(env);
+  if (err) return err;
   const { id, title, by } = await request.json().catch(() => ({}));
   if (!id) return new Response("missing id", { status: 400 });
 
