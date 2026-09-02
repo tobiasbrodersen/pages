@@ -159,7 +159,7 @@ h1 {
     gap: 8px;
 }
 
-.reserve-box.reserving .reserve-btn {
+.reserve-box.reserving > .reserve-btn {
     display: none;
 }
 
