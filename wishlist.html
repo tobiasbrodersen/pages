@@ -158,9 +158,22 @@
             `;
         }
 
-        function markReserved(box) {
-            box.innerHTML = '<button class="reserve-btn" disabled>Reserveret</button>';
+        function markReserved(box, by) {
+            box.textContent = '';
             box.closest('.wishlist-item').classList.add('reserved');
+
+            const label = document.createElement('div');
+            label.className = 'reserved-label';
+            label.textContent = 'Reserveret';
+            box.appendChild(label);
+
+            if (by) {
+                const btn = document.createElement('button');
+                btn.className = 'reserve-btn';
+                btn.textContent = 'Af hvem?';
+                btn.onclick = () => { btn.textContent = 'Reserveret af ' + by; };
+                box.appendChild(btn);
+            }
         }
 
         // Swap the button for the name input (no native dialog).
@@ -180,7 +193,7 @@
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ id, title, by })
             });
-            if (res.ok || res.status === 409) markReserved(box);
+            if (res.ok || res.status === 409) markReserved(box, by);
             else form.querySelector('[type=submit]').disabled = false;
         }
 
@@ -191,12 +204,12 @@
 
             const reserved = await fetch('/api/reservations')
                 .then((r) => r.json())
-                .then((d) => new Set(d.ids))
-                .catch(() => new Set());
+                .then((d) => new Map(d.reserved.map((x) => [x.id, x.by])))
+                .catch(() => new Map());
 
             container.querySelectorAll('.wishlist-item').forEach((el) => {
                 if (reserved.has(el.dataset.id)) {
-                    markReserved(el.querySelector('.reserve-box'));
+                    markReserved(el.querySelector('.reserve-box'), reserved.get(el.dataset.id));
                 }
             });
         }
