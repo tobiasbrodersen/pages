@@ -132,6 +132,10 @@
 
 
 
+        // Stable id per item (index-based) — reservation keys depend on it,
+        // so only ever append new items to the array, never reorder them.
+        wishlistItems.forEach((item, i) => { item.id = String(i); });
+
         // Function to create wishlist item HTML
         function createWishlistItem(item) {
             const detailsHTML = Object.entries(item.details)
@@ -143,22 +147,64 @@
                 `).join('');
 
             return `
-                <a href="${item.link}" target="_blank" class="wishlist-item">
-                    <img src="${item.image}" alt="${item.title}" class="item-image">
-                    <div class="item-title">
-                        ${item.title}
+                <div class="wishlist-item" data-id="${item.id}">
+                    <a href="${item.link}" target="_blank" class="item-link">
+                        <img src="${item.image}" alt="${item.title}" class="item-image">
+                        <div class="item-title">${item.title}</div>
+                        <div class="item-details">${detailsHTML}</div>
+                    </a>
+                    <div class="reserve-box">
+                        <button class="reserve-btn" onclick="startReserve(this)">Reserver</button>
+                        <form class="reserve-form" onsubmit="reserve('${item.id}', this); return false;">
+                            <input class="reserve-name" placeholder="Dit navn" required>
+                            <button type="submit" class="reserve-btn">Bekræft</button>
+                        </form>
                     </div>
-                    <div class="item-details">
-                        ${detailsHTML}
-                    </div>
-                </a>
+                </div>
             `;
         }
 
-        // Render all wishlist items
-        function renderWishlist() {
+        function markReserved(box) {
+            box.innerHTML = '<button class="reserve-btn" disabled>Reserveret</button>';
+            box.closest('.wishlist-item').classList.add('reserved');
+        }
+
+        // Swap the button for the name input (no native dialog).
+        function startReserve(btn) {
+            btn.closest('.reserve-box').classList.add('reserving');
+            btn.nextElementSibling.querySelector('.reserve-name').focus();
+        }
+
+        async function reserve(id, form) {
+            const box = form.closest('.reserve-box');
+            const by = form.querySelector('.reserve-name').value.trim();
+            if (!by) return;
+            form.querySelector('[type=submit]').disabled = true;
+            const title = wishlistItems.find((it) => it.id === id)?.title;
+            const res = await fetch('/api/reservations', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ id, title, by })
+            });
+            if (res.ok || res.status === 409) markReserved(box);
+            else form.querySelector('[type=submit]').disabled = false;
+        }
+
+        // Render all wishlist items, then grey out already-reserved ones
+        async function renderWishlist() {
             const container = document.getElementById('wishlist');
             container.innerHTML = wishlistItems.map(createWishlistItem).join('');
+
+            const reserved = await fetch('/api/reservations')
+                .then((r) => r.json())
+                .then((d) => new Set(d.ids))
+                .catch(() => new Set());
+
+            container.querySelectorAll('.wishlist-item').forEach((el) => {
+                if (reserved.has(el.dataset.id)) {
+                    markReserved(el.querySelector('.reserve-box'));
+                }
+            });
         }
 
         // Initialize wishlist when page loads
