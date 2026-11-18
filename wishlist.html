@@ -22,6 +22,16 @@
         // Define your wishlist items here
         const wishlistItems = [
             {
+                id: "21",
+                image: "https://www.footstore.dk/shared/38/243/herre-sneakers-ecco-ecco-street-lite-m-shoe-521304-51053_1160x1160p.webp",
+                title: "ECCO Street Lite M (ruskind)",
+                link: "https://dk.ecco.com/produkt/ecco-street-lite/521304/60833",
+                details: {
+                    "Materiale": "Ruskind (suede)",
+                    "Størrelse": "45"
+                }
+            },
+            {
                 id: "0",
                 image: "https://i.etsystatic.com/60948915/r/il/894939/8243500477/il_1588xN.8243500477_tegg.jpg",
                 title: "The Lord of the Rings + The Hobbit - Leaderbound",
@@ -110,16 +120,6 @@
                 }
             },
             {
-                id: "21",
-                image: "https://www.footstore.dk/shared/38/243/herre-sneakers-ecco-ecco-street-lite-m-shoe-521304-51053_1160x1160p.webp",
-                title: "ECCO Street Lite M (ruskind)",
-                link: "https://dk.ecco.com/produkt/ecco-street-lite/521304/60833",
-                details: {
-                    "Materiale": "Ruskind (suede)",
-                    "Størrelse": "45"
-                }
-            },
-            {
                 id: "22",
                 image: "https://seramikku.dk/cdn/shop/files/DSC04506copy.jpg?v=1708430420&width=1200",
                 title: "Seramikku Nakiri 16,5 cm - Magnolia/bøffelhorn (wa-greb)",
@@ -156,8 +156,9 @@
 
 
         // Stable id per item — reservation keys depend on it, so each item
-        // carries an explicit id above. Fall back to index for any new item
-        // added without one; only ever append, never reorder.
+        // carries an explicit id above. Array order is display-only and safe
+        // to reorder; new items must get a fresh unique id (never reuse one),
+        // or they fall back to an index that can collide after reordering.
         wishlistItems.forEach((item, i) => { item.id = item.id ?? String(i); });
 
         // Function to create wishlist item HTML
